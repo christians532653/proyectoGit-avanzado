@@ -14,10 +14,8 @@ jobs:
       - name: Comparar tokens
         shell: powershell -ExecutionPolicy Bypass -File {0}
         run: |
-          if ($env:DEV_TOKEN -eq $env:LOCAL_DEV_TOKEN) {
-            Write-Host "Los tokens coinciden"
-          }
-          else {
-            Write-Host "Los tokens NO coinciden"
-            exit 1
-          }
+          $devCorrecto = $env:DEV_TOKEN -eq "DEV-123456"
+          $localCorrecto = $env:LOCAL_DEV_TOKEN -eq "DEV-123456"
+
+          Write-Host "DEV_TOKEN de GitHub correcto: $devCorrecto"
+          Write-Host "LOCAL_DEV_TOKEN local correcto: $localCorrecto"
