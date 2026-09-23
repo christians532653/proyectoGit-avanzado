@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Comparar tokens
-        shell: powershell
+        shell: powershell -ExecutionPolicy Bypass -File {0}
         run: |
           if ($env:DEV_TOKEN -eq $env:LOCAL_DEV_TOKEN) {
             Write-Host "Los tokens coinciden"
