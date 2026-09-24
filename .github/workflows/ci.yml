@@ -1,4 +1,4 @@
-name: CD
+name: CI
 
 permissions:
   contents: write
@@ -7,10 +7,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
-      - main
+      - develop
   push:
     branches:
-      - main
+      - develop
   workflow_dispatch:
 
 jobs:
@@ -23,32 +23,29 @@ jobs:
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - name: Incrementar versión
+      - name: Actualizar README
         run: |
-          VERSION=$(grep -o 'AppVersion-[0-9]*' README.md | head -1 | cut -d- -f2)
-          NEW_VERSION=$((VERSION + 1))
-          sed -i "s/AppVersion-$VERSION/AppVersion-$NEW_VERSION/" README.md
-          echo "Fecha y hora: $(date '+%Y-%m-%d %H:%M:%S')" >> README.md
+          echo "Añadida feature: ${{ github.head_ref || github.ref_name }}" >> README.md
 
       - name: Guardar cambios
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git diff --cached --quiet || git commit -m "Incrementar versión"
+          git diff --cached --quiet || git commit -m "Actualizar README"
           git push origin HEAD:${{ github.head_ref || github.ref_name }}
 
-  validate-prod:
+  validate-dev:
     runs-on: self-hosted
     needs: updatereadme
 
     steps:
-      - name: Validar PROD_TOKEN
+      - name: Validar DEV_TOKEN
         shell: cmd
         env:
-          PROD_TOKEN: ${{ secrets.PROD_TOKEN }}
+          DEV_TOKEN: ${{ secrets.DEV_TOKEN }}
         run: |
-          if "%PROD_TOKEN%"=="%LOCAL_PROD_TOKEN%" (
+          if "%DEV_TOKEN%"=="%LOCAL_DEV_TOKEN%" (
             echo Los tokens coinciden
           ) else (
             echo Los tokens NO coinciden
