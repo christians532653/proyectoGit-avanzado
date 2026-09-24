@@ -1,4 +1,4 @@
-AppVersion-6
+AppVersion-7
 Añadida feature: feature/mi-feature
 Prueba manual develop
 Añadida feature: develop
@@ -8,3 +8,4 @@ Fecha y hora: 2026-09-24 09:21:53
 Fecha y hora: 2026-09-24 09:22:24
 Fecha y hora: 2026-09-24 09:23:20
 Fecha y hora: 2026-09-24 09:24:59
+Fecha y hora: 2026-09-24 09:26:25
