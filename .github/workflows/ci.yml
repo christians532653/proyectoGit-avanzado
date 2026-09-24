@@ -1,5 +1,8 @@
 name: CI
 
+permissions:
+  contents: write
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -9,9 +12,6 @@ on:
     branches:
       - develop
   workflow_dispatch:
-
-permissions:
-  contents: write
 
 jobs:
   updatereadme:
